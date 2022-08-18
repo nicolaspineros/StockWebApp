@@ -9,7 +9,7 @@ public class StockWebApp {
         get("/hello", (req, res) -> "Hello " + req.queryParams("name"));
         get("/stock", (req, res) -> {
             res.type("application/json");
-            return ApiReader.getStock();
+            return ApiReader.getStock(req.queryParams("name"));
         });
     }
 

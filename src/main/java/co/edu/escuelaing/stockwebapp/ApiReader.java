@@ -10,10 +10,11 @@ import java.net.URL;
 public class ApiReader {
 
     private static final String USER_AGENT = "Mozilla/5.0";
-    private static final String GET_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo";
+    private static String GET_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=NZZ1BLMFLGUJA0OC";
 
-    public static String getStock() throws IOException {
-
+    public static String getStock(String stock) throws IOException {
+        GET_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="+stock+"&interval=60min&apikey=NZZ1BLMFLGUJA0OC";
+        System.out.println(GET_URL);
         URL obj = new URL(GET_URL);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
