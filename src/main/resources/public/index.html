@@ -36,15 +36,6 @@
                 const xhttp = new XMLHttpRequest();
                 xhttp.onload = function() {
                     var stockObject = JSON.parse(this.responseText);
-                    //document.getElementById("table").innerHTML = this.responseText;
-                    /*var table = document.getElementById("table").innerHTML;
-                    var row = table.insertRow(-1);
-                    var time = row.insertCell(0);
-                    var open = row.insertCell(1);
-                    var high = row.insertCell(2);
-                    var close = row.insertCell(3);
-                    var volume = row.insertCell(4);*/
-                    console.log(stockObject);
                     for (var x in stockObject['Time Series (60min)']) {
                         console.log(x);
                         console.log(stockObject['Time Series (60min)'][x]);
