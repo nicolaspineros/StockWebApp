@@ -15,6 +15,15 @@
 <form action="/hello">
     <label for="name">Stock:</label><br>
     <input type="text" id="name" name="name"><br><br>
+    <div>
+        <label for="TimeSeries">Time Series:</label>
+        <select name="TimeSeries" id="TimeSeries">
+            <option value="Intra-dia" selected>Intra-dia</option>
+            <option value="Diaria">Diaria</option>
+            <option value="Semanal">Semanal</option>
+            <option value="Mensual">Mensual</option>
+        </select>
+    </div>
     <input type="button" value="Submit" onclick="loadGetMsg()">
 </form>
 <div id="getrespmsg">
@@ -36,9 +45,11 @@
                 const xhttp = new XMLHttpRequest();
                 xhttp.onload = function() {
                     var stockObject = JSON.parse(this.responseText);
+                    var type = getTypeTimeSeries();
+                    console.log(type);
                     for (var x in stockObject['Time Series (60min)']) {
-                        console.log(x);
-                        console.log(stockObject['Time Series (60min)'][x]);
+                        //console.log(x);
+                        //console.log(stockObject['Time Series (60min)'][x]);
                         document.getElementById("table").innerHTML +=
                             `<tr>
                                 <td>${x}</td>
@@ -50,9 +61,26 @@
                             </tr>`
                     }
                 }
-                //xhttp.open("GET", "/hello?name="+nameVar);
                 xhttp.open("GET", "/stock?name="+nameVar);
                 xhttp.send();
+            }
+
+            function getTypeTimeSeries() {
+                var selected = document.getElementById("TimeSeries").value;
+                switch (selected) {
+                    case 'Intra-dia':
+                        return "Time Series (60min)";
+                        break;
+                    case 'Diaria':
+                        return "Time Series (Daily)";
+                        break;
+                    case 'Semanal':
+                        return "Weekly Time Series";
+                        break;
+                    case 'Mensual':
+                        return "Monthly Time Series";
+                        break;
+                }
             }
         </script>
 
