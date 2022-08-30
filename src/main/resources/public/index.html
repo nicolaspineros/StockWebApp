@@ -43,25 +43,22 @@
             function loadGetMsg() {
                 let nameVar = document.getElementById("name").value;
                 const xhttp = new XMLHttpRequest();
+                var type = getTypeTimeSeries();
                 xhttp.onload = function() {
                     var stockObject = JSON.parse(this.responseText);
-                    var type = getTypeTimeSeries();
-                    console.log(type);
-                    for (var x in stockObject['Time Series (60min)']) {
-                        //console.log(x);
-                        //console.log(stockObject['Time Series (60min)'][x]);
+                    for (var x in stockObject[type]) {
                         document.getElementById("table").innerHTML +=
                             `<tr>
                                 <td>${x}</td>
-                                <td>${stockObject['Time Series (60min)'][x]['1. open']}</td>
-                                <td>${stockObject['Time Series (60min)'][x]['2. high']}</td>
-                                <td>${stockObject['Time Series (60min)'][x]['3. low']}</td>
-                                <td>${stockObject['Time Series (60min)'][x]['4. close']}</td>
-                                <td>${stockObject['Time Series (60min)'][x]['5. volume']}</td>
+                                <td>${stockObject[type][x]['1. open']}</td>
+                                <td>${stockObject[type][x]['2. high']}</td>
+                                <td>${stockObject[type][x]['3. low']}</td>
+                                <td>${stockObject[type][x]['4. close']}</td>
+                                <td>${stockObject[type][x]['5. volume']}</td>
                             </tr>`
                     }
                 }
-                xhttp.open("GET", "/stock?name="+nameVar);
+                xhttp.open("GET", "/stock?name="+nameVar+"&type="+type);
                 xhttp.send();
             }
 
