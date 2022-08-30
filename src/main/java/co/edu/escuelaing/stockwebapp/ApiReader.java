@@ -3,7 +3,6 @@ package co.edu.escuelaing.stockwebapp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -13,7 +12,7 @@ public class ApiReader {
     private static String GET_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=NZZ1BLMFLGUJA0OC";
 
     public static String getStock(String stock, String type) throws IOException {
-        GET_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="+stock+"&interval=60min&apikey=NZZ1BLMFLGUJA0OC";
+        updateURL(stock,type);
         System.out.println(GET_URL);
         System.out.println("stock = " + stock + ", type = " + type);
         URL obj = new URL(GET_URL);
@@ -44,6 +43,23 @@ public class ApiReader {
         }
         System.out.println("GET DONE");
         return "Failed";
+    }
+
+    public static void updateURL(String stock,String type){
+        switch (type){
+            case "Time Series (60min)":
+                GET_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="+stock+"&interval=60min&apikey=NZZ1BLMFLGUJA0OC";
+                break;
+            case "Time Series (Daily)":
+                GET_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="+stock+"&apikey=NZZ1BLMFLGUJA0OC";
+                break;
+            case "Weekly Time Series":
+                GET_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol="+stock+"&apikey=NZZ1BLMFLGUJA0OC";
+                break;
+            case "Monthly Time Series":
+                GET_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol="+stock+"&apikey=NZZ1BLMFLGUJA0OC";
+                break;
+        }
     }
 
 }
